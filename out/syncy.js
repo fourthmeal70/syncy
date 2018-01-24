@@ -57,60 +57,15 @@ function run(patterns, dest, sourceFiles, options, log) {
                 return io.makeDirectory(dest);
             }
         });
-        const destFiles = yield globby(['**',
-        	'!**/cf_CustomTags_docs',
-			'!**/cf_CustomTags_docs/**',
-			'!**/cf_CustomTags_pro',
-			'!**/cf_CustomTags_pro/**',
-			'!**/cfm_marketing/MediaKit',
-			'!**/cfm_marketing/MediaKit/**',
-			"!**/events/docs",
-			"!**//events/docs/**",
-			'!**/KeywordData',
-			'!**/KeywordData/**',
-			'!**/localdata',
-			'!**/localdata/**',
-			'!**/LuceneIndexes',
-			'!**/LuceneIndexes/**',
-			'!**/ImageRepository',
-			'!**/ImageRepository/**',
-			'!**/ProductAreaData',
-			'!**/ProductAreaData/**',
-			'!**/ProductAreas',
-			'!**/ProductAreas/**',
-			'!**/GoogleSitemaps',
-			'!**/GoogleSitemaps/**',
-			'!**/wwwroot/pix',
-			'!**/wwwroot/pix/**',
-			'!**/mxunit',
-			'!**/mxunit/**',
-			'!**/uploads',
-			'!**/uploads/**',
-			'!**/VendHome',
-			'!**/VendHome/**',
-			'!**/ImageUploads',
-			'!**/ImageUploads/**',
-			'!**/FilesInProcess',
-			'!**/FilesInProcess/**',
-			'!**/javalib/JSpecSearchService',
-			'!**/javalib/JSpecSearchService/**',
-			'!**/javalib/JSpecSearchService_new',
-			'!**/javalib/JSpecSearchService_new/**',
-			'!**/javalib/GsBannerAdApi',
-			'!**/javalib/GsBannerAdApi/**',
-			'!**/javalib/OmnitureReportingService',
-			'!**/javalib/OmnitureReportingService/**',
-			'!**/.svn/',
-			'!**/.svn/**',
-			'!**/progs',
-			'!**/progs/**',
-			'!**/web.config',
-			'!**/Thumbs.db',
-			'!**/*.pdf'], {
-            cwd: dest,
-            dot: true,
-            nosort: true
-        });
+        
+		// Actually ignore the paths specificed in 'ignoreInDest' option
+		const ignoreInDestArr = Array.isArray(options.ignoreInDest) ? options.ignoreInDest : [options.ignoreInDest];
+		const destFiles = await globby(['**'].concat(ignoreInDestArr.map((v) => '!' + v)), <glob.IOptions>{
+			cwd: dest,
+			dot: true,
+			nosort: true
+		});
+	
         const excludedFiles = options.ignoreInDest.reduce((ret, pattern) => {
             return ret.concat(minimatch.match(destFiles, pattern, { dot: true }));
         }, []).map((filepath) => utils.pathFromDestToSource(filepath, options.base));
