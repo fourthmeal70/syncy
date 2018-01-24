@@ -47,11 +47,19 @@ export async function run(patterns: string[], dest: string, sourceFiles: string[
 	});
 
 	// Get files from destination directory
-	const destFiles = await globby('**', <glob.IOptions>{
+	// Actually ignore the paths specificed in 'ignoreInDest' option
+	const ignoreInDestArr = Array.isArray(options.ignoreInDest) ? options.ignoreInDest : [options.ignoreInDest];
+	const destFiles = yield globby(['**'].concat(ignoreInDestArr.map(v => { return "!" + v; })), {
 		cwd: dest,
 		dot: true,
 		nosort: true
 	});
+	
+	/*const destFiles = await globby('**', <glob.IOptions>{
+		cwd: dest,
+		dot: true,
+		nosort: true
+	});*/
 
 	// Get all the parts of a file path for excluded paths
 	const excludedFiles = (<string[]>options.ignoreInDest).reduce((ret, pattern) => {
