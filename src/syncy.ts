@@ -54,7 +54,6 @@ export async function run(patterns: string[], dest: string, sourceFiles: string[
 		dot: true,
 		nosort: true
 	});
-	
 	/*const destFiles = await globby('**', <glob.IOptions>{
 		cwd: dest,
 		dot: true,
