@@ -49,11 +49,11 @@ export async function run(patterns: string[], dest: string, sourceFiles: string[
 	// Get files from destination directory
 	// Actually ignore the paths specificed in 'ignoreInDest' option
 	const ignoreInDestArr = Array.isArray(options.ignoreInDest) ? options.ignoreInDest : [options.ignoreInDest];
-	const destFiles = await globby(['**'].concat(ignoreInDestArr.map((v) => '!' + v;)), <glob.IOptions>{
+	const destFiles = await globby(['**'].concat(ignoreInDestArr.map((v) => '!' + v)), <glob.IOptions>{
 		cwd: dest,
 		dot: true,
 		nosort: true
-	});
+	})
 	/*const destFiles = await globby('**', <glob.IOptions>{
 		cwd: dest,
 		dot: true,
