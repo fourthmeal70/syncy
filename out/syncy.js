@@ -60,11 +60,11 @@ function run(patterns, dest, sourceFiles, options, log) {
         
 		// Actually ignore the paths specificed in 'ignoreInDest' option
 		const ignoreInDestArr = Array.isArray(options.ignoreInDest) ? options.ignoreInDest : [options.ignoreInDest];
-		const destFiles = await globby(['**'].concat(ignoreInDestArr.map((v) => '!' + v)), <glob.IOptions>{
-			cwd: dest,
-			dot: true,
-			nosort: true
-		});
+        const destFiles = yield globby(['**'].concat(ignoreInDestArr.map(v => { return "!" + v; })), {
+            cwd: dest,
+            dot: true,
+            nosort: true
+        });
 	
         const excludedFiles = options.ignoreInDest.reduce((ret, pattern) => {
             return ret.concat(minimatch.match(destFiles, pattern, { dot: true }));
