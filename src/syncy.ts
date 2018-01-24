@@ -49,7 +49,7 @@ export async function run(patterns: string[], dest: string, sourceFiles: string[
 	// Get files from destination directory
 	// Actually ignore the paths specificed in 'ignoreInDest' option
 	const ignoreInDestArr = Array.isArray(options.ignoreInDest) ? options.ignoreInDest : [options.ignoreInDest];
-	const destFiles = yield globby(['**'].concat(ignoreInDestArr.map(v => { return "!" + v; })), {
+	const destFiles = yield globby(['**'].concat(ignoreInDestArr.map((v) => '!' + v; )), {
 		cwd: dest,
 		dot: true,
 		nosort: true
