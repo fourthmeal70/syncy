@@ -63,8 +63,7 @@ function run(patterns, dest, sourceFiles, options, log) {
         const destFiles = yield globby(['**'].concat(ignoreInDestArr.map(v => { return "!" + v; })), {
             cwd: dest,
             dot: true,
-            nosort: true,
-			nocase: true
+            nosort: true
         });
 	
         const excludedFiles = options.ignoreInDest.reduce((ret, pattern) => {
