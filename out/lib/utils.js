@@ -36,9 +36,9 @@ function skipUpdate(source, dest, updateAndDelete) {
     if (source.isDirectory()) {
         return true;
     }
-    if (dest && compareTime(source, dest)) {
-        return true;
-    }
+    //if (dest && compareTime(source, dest)) {
+    //    return true;
+    //}
     return false;
 }
 exports.skipUpdate = skipUpdate;
