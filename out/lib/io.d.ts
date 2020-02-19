@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import * as fs from 'fs';
 import * as rimraf from 'rimraf';
 export declare function pathExists(filepath: string): Promise<boolean>;
