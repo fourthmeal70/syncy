@@ -4,9 +4,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
         function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments)).next());
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const chalk = require("chalk");
 const isGlob = require("is-glob");
 const globParent = require("glob-parent");
@@ -41,7 +42,7 @@ function assertPatternsInput(patterns, dest) {
         throw new TypeError('patterns must be a string or an array of strings');
     }
     for (let i = 0; i < patterns.length; i++) {
-        if (typeof patterns[i] !== 'string' || !isGlob(patterns[i])) {
+        if (typeof patterns[i] !== 'string' || !isGlob(patterns[i]) || !patterns[i]) {
             throw new TypeError('patterns must be a glob-pattern. See https://github.com/isaacs/node-glob#glob-primer');
         }
     }
@@ -163,5 +164,4 @@ function syncy(source, dest, options) {
         });
     });
 }
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = syncy;
